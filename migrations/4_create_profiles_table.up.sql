@@ -1,0 +1,7 @@
+CREATE TABLE profiles (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(32) UNIQUE NOT NULL,
+  bio VARCHAR(512),
+  photo VARCHAR(128),
+  is_archived BOOLEAN
+);
