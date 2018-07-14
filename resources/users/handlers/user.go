@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo"
 
+	"github.com/defact/user/json"
 	service "github.com/defact/user/resources/users/services"
 )
 
@@ -19,5 +20,5 @@ func (h UserHandlers) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "Not found")
 	}
 
-	return c.JSON(http.StatusOK, user)
+	return c.JSON(http.StatusOK, json.Wrap("user", user))
 }
