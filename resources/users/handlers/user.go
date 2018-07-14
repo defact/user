@@ -5,13 +5,13 @@ import (
 
 	"github.com/labstack/echo"
 
-	"github.com/defact/user/resources/users/services"
+	service "github.com/defact/user/resources/users/services"
 )
 
 type UserHandlers struct{}
 
 func (h UserHandlers) Get(c echo.Context) error {
-	user := users.Finder{}.Get(c.Param("id"))
+	user := service.Finder{}.Get(c.Param("id"))
 
 	if user.Id == 0 {
 		return echo.NewHTTPError(http.StatusNotFound, "Not found")
