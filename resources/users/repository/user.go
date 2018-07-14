@@ -9,12 +9,28 @@ import (
 
 type Repository struct{}
 
-func (r Repository) Get(id string) users.User {
+func (r Repository) Create(user users.User) users.User {
 	db := database.Instance()
 
-	var user users.User
+	id := 0
+	query := `INSERT INTO users (email) VALUES ($1) RETURNING id;`
 
-	err := db.QueryRow(`SELECT id, email FROM users WHERE id=$1;`, id).Scan(&user.Id, &user.Email)
+	err := db.QueryRow(query, user.Email).Scan(&id)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return r.Get(id)
+}
+
+func (r Repository) Get(id int) users.User {
+	db := database.Instance()
+
+	user := users.User{}
+	query := `SELECT id, email FROM users WHERE id=$1;`
+
+	err := db.QueryRow(query, id).Scan(&user.Id, &user.Email)
 
 	if err == sql.ErrNoRows {
 		return user

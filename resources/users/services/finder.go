@@ -7,7 +7,7 @@ import (
 
 type Finder struct{}
 
-func (f Finder) Get(id string) model.User {
+func (f Finder) Get(id int) model.User {
 	return users.Repository{}.Get(id)
 }
 

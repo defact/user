@@ -2,6 +2,7 @@ package users
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 
@@ -11,7 +12,8 @@ import (
 type UserHandlers struct{}
 
 func (h UserHandlers) Get(c echo.Context) error {
-	user := service.Finder{}.Get(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
+	user := service.Finder{}.Get(id)
 
 	if user.Id == 0 {
 		return echo.NewHTTPError(http.StatusNotFound, "Not found")
