@@ -14,4 +14,4 @@ WORKDIR /app
 COPY --from=builder /go/src/github.com/defact/user/user /app
 COPY --from=builder /go/src/github.com/defact/user/config/*.json /app/config/
 COPY --from=builder /go/src/github.com/defact/user/migrations/*.sql /app/migrations/
-ENTRYPOINT .user
+ENTRYPOINT ./user
