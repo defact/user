@@ -12,5 +12,5 @@ RUN adduser -D non-root
 USER non-root
 WORKDIR /app
 COPY --from=builder /go/src/github.com/defact/user/user /app
-EXPOSE 12345
+EXPOSE 80
 ENTRYPOINT ./user

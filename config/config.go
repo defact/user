@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jinzhu/configor"
 )
@@ -13,6 +14,7 @@ type Configuration = struct {
 }
 
 func Load(configuration *Configuration) {
-	configor.Load(configuration, "./config/config.json")
+	var path, _ = os.Getwd()
+	configor.Load(configuration, path+"/config/config.json")
 	fmt.Printf("config: %#v", configuration)
 }
