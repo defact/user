@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/BurntSushi/toml"
+  packages = ["."]
+  revision = "b26d9c308763d68093482582cea63d69be07a0f0"
+  version = "v0.3.0"
+
+[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
@@ -18,6 +24,12 @@
   ]
   revision = "bcd996f3df28363f43e2d0935484c4559537a3eb"
   version = "v3.3.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jinzhu/configor"
+  packages = ["."]
+  revision = "4edaf76fe18865e36de734d887f4c01bd05707af"
 
 [[projects]]
   name = "github.com/labstack/echo"
@@ -87,9 +99,15 @@
   packages = ["unix"]
   revision = "1b2967e3c290b7c545b3db0deeda16e9be4f98a2"
 
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a0ab345e58d471f40f92fda6dcd3b7140e6f5ae59d8128bb354011a6bcbb985e"
+  inputs-digest = "e802fc8f187782938366b51738aac41e217c1d75fa356d272935f3866c91fd6c"
   solver-name = "gps-cdcl"
   solver-version = 1

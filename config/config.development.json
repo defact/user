@@ -1,0 +1,3 @@
+{
+  "PgConnection": "postgres://johnny:johnny@localhost:5432/defact?sslmode=disable"
+}

@@ -1,15 +1,15 @@
 package migrations
 
 import (
-			"github.com/golang-migrate/migrate"
-	  _	"github.com/golang-migrate/migrate/database/postgres"
-		_ "github.com/golang-migrate/migrate/source/file"
+	"github.com/golang-migrate/migrate"
+	_ "github.com/golang-migrate/migrate/database/postgres"
+	_ "github.com/golang-migrate/migrate/source/file"
 )
 
-func Migrate() {
-	m, err := migrate.New("file://migrations", "postgres://johnny:johnny@localhost:5432/defact?sslmode=disable")
+func Migrate(path, conn string) {
+	m, err := migrate.New(path, conn)
 	if err != nil {
-		panic(err);
+		panic(err)
 	}
 	m.Up()
 }

@@ -1,28 +1,21 @@
 package database
 
 import (
-	"fmt"
 	"database/sql"
+
 	_ "github.com/lib/pq"
-		
+
+	"github.com/defact/user/config"
 	"github.com/defact/user/migrations"
 )
 
-const (
-  host     = "localhost"
-  port     = 5432
-  user     = "johnny"
-  password = "johnny"
-  dbname   = "defact"
-)
-
 var database *sql.DB
+var configuration config.Configuration
 
 func Initialize() {
-	conn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-		
-	db, err := sql.Open("postgres", conn)
+	config.Load(&configuration)
+
+	db, err := sql.Open("postgres", configuration.PgConnection)
 
 	if err != nil {
 		panic(err)
@@ -36,7 +29,7 @@ func Initialize() {
 
 	database = db
 
-	migrations.Migrate()
+	migrations.Migrate(configuration.MigrationsPath, configuration.PgConnection)
 }
 
 func Instance() *sql.DB {
