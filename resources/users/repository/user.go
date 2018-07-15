@@ -2,6 +2,7 @@ package users
 
 import (
 	"database/sql"
+	"strconv"
 
 	"github.com/defact/user/database"
 	"github.com/defact/user/resources/users/models"
@@ -13,9 +14,9 @@ func (r Repository) Create(user users.User) users.User {
 	db := database.Instance()
 
 	id := 0
-	query := `INSERT INTO users (email) VALUES ($1) RETURNING id;`
+	query := `INSERT INTO users (email, hashed_password) VALUES ($1, $2) RETURNING id;`
 
-	err := db.QueryRow(query, user.Email).Scan(&id)
+	err := db.QueryRow(query, user.Email, user.HashedPassword).Scan(&id)
 
 	if err != nil {
 		panic(err)
@@ -24,13 +25,12 @@ func (r Repository) Create(user users.User) users.User {
 	return r.Get(id)
 }
 
-func (r Repository) Get(id int) users.User {
+func get(query, param string) users.User {
 	db := database.Instance()
 
 	user := users.User{}
-	query := `SELECT id, email FROM users WHERE id=$1;`
 
-	err := db.QueryRow(query, id).Scan(&user.Id, &user.Email)
+	err := db.QueryRow(query, param).Scan(&user.Id, &user.Email, &user.HashedPassword)
 
 	if err == sql.ErrNoRows {
 		return user
@@ -41,6 +41,14 @@ func (r Repository) Get(id int) users.User {
 	}
 
 	return user
+}
+
+func (r Repository) Get(id int) users.User {
+	return get(`SELECT id, email, COALESCE(hashed_password, '') FROM users WHERE id=$1;`, strconv.Itoa(id))
+}
+
+func (r Repository) GetByEmail(email string) users.User {
+	return get(`SELECT id, email, COALESCE(hashed_password, '') FROM users WHERE email=$1;`, email)
 }
 
 func (r Repository) List() []users.User {
